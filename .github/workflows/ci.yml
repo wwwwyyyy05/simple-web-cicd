@@ -86,24 +86,23 @@ jobs:
           path: ./
 
       - name: 传输 compose + 镜像到服务器
-  uses: appleboy/scp-action@v0.1.7
-  with:
-    host: ${{ secrets.SSH_HOST }}
-    username: root
-    password: ${{ secrets.SSH_PASSWORD }}
-    source: ./
-    target: /root/deploy
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: ./
+          target: /root/deploy
 
-   - name: 加载镜像并启动服务
-  uses: appleboy/ssh-action@v1.0.3
-  with:
-    host: ${{ secrets.SSH_HOST }}
-    username: root
-    password: ${{ secrets.SSH_PASSWORD }}
-    # 删掉这一行：key: ${{ secrets.SSH_PRIVATE_KEY }}
-    script: |
-      set -e
-            cd /opt/simple-web
+      - name: 加载镜像并启动服务
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            set -e
+            cd /root/deploy
 
             echo "=== [1/5] 加载 Docker 镜像 ==="
             gunzip -f simple-web.tar.gz
