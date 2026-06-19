@@ -86,13 +86,13 @@ jobs:
           path: ./
 
       - name: 传输 compose + 镜像到服务器
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          source: "docker-compose.prod.yml,simple-web.tar.gz"
-          target: "/opt/simple-web/"
-          strip_components: 0
+  uses: appleboy/scp-action@v0.1.7
+  with:
+    host: ${{ secrets.SSH_HOST }}
+    username: root
+    password: ${{ secrets.SSH_PASSWORD }}
+    source: ./
+    target: /root/deploy
 
       - name: 加载镜像并启动服务
         uses: appleboy/ssh-action@v1.0.3
