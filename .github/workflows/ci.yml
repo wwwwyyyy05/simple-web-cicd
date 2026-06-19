@@ -94,14 +94,15 @@ jobs:
     source: ./
     target: /root/deploy
 
-      - name: 加载镜像并启动服务
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            set -e
+   - name: 加载镜像并启动服务
+  uses: appleboy/ssh-action@v1.0.3
+  with:
+    host: ${{ secrets.SSH_HOST }}
+    username: root
+    password: ${{ secrets.SSH_PASSWORD }}
+    # 删掉这一行：key: ${{ secrets.SSH_PRIVATE_KEY }}
+    script: |
+      set -e
             cd /opt/simple-web
 
             echo "=== [1/5] 加载 Docker 镜像 ==="
